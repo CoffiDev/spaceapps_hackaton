@@ -21,11 +21,16 @@ def list(request):
     context = {
         'companies': Company.objects.all()
     }
-    return render(request, 'companies/list.html', context)
+    return render(request, 'companies/wuapa.html', context)
 
 
 def detail(request, company_id):
-    return True
+    company = Company.objects.get(id=company_id)
+    context = {
+        'company':  company,
+        'info': company.informationrecovered_set.last()
+    }
+    return render(request, 'companies/empresa1.html', context)
 
 
 def get_data(request):

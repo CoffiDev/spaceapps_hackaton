@@ -10,6 +10,6 @@ from space.companies import views as companies
 urlpatterns = (
     url(r'^admin/', include(admin.site.urls)),
     url('^$', companies.list, name='list'),
-    url('^/(?P<company_id>[-\w]{1,144})$', companies.detail, name='detail'),
+    url('^(?P<company_id>\d+)', companies.detail, name='detail'),
     url('^data$', companies.get_data, name='get_data'),
 )

@@ -23,6 +23,17 @@ class Company(models.Model):
         max_digits=16
     )
 
+    employers_number = models.IntegerField()
+
+    ocuped_area = models.DecimalField(
+        decimal_places=8,
+        max_digits=11
+    )
+
+    used_energies = models.TextField()
+
+    branch = models.TextField()
+
     grade = models.DecimalField(
         decimal_places=5,
         max_digits=10
