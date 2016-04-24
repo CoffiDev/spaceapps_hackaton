@@ -1,0 +1,15 @@
+*.pyc
+logs/*
+media/*
+*.sqlite3
+*.sublime*
+.vagrant
+.ropeproject
+*.swp
+node_modules
+bower_components
+.sass-cache
+.idea/
+*.iml
+env/
+uploads/*
