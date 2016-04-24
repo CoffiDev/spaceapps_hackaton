@@ -31,6 +31,7 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
 
     # Project apps
+    'space.companies',
 
     # Third party apps
     'django_extensions',

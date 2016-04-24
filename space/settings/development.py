@@ -25,16 +25,12 @@ STATICFILES_FINDERS = (
 MEDIA_URL = '/media/'
 MEDIA_ROOT = '/storage/'
 
+
+TEMPLATE_DIRS = (BASE_DIR + 'templates',)
+
 INSTALLED_APPS += (
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.staticfiles',
     'django.contrib.sessions'
 )
-
-MIDDLEWARE_CLASSES = (
-    'corsheaders.middleware.CorsMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware'
-) + MIDDLEWARE_CLASSES
