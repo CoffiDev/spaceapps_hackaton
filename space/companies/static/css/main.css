@@ -67,7 +67,46 @@ footer {
 
 footer a:hover, footer a:focus, footer a:active {
       color: #55B0FF; }
-
-
-
+.content-space-one {
+  padding: 0px;
+  margin-bottom: 0px;
+  color: white;
+  background: url('../images/EG.jpg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+.page-break {
+    width: 50%;
+    height: 3px;
+    background-color: #fff;
+    margin: 0 auto;
+}
+.content-space-two {
+  padding: 0px;
+  margin-bottom: 0px;
+  color: white;
+  background: url('../images/mineria.jpg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+.content-space-three {
+  padding: 0px;
+  margin-bottom: 0px;
+  color: white;
+  background: url('../images/petroquimica.jpg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
 
