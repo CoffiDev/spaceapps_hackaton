@@ -85,11 +85,14 @@
             <br>
             <img class="img-circle img-responsive center-block"
                  {% if company.grade < 3 %}
+                 src="{% static "images/grad1.jpg" %}"
                  {% elif company.grade < 5 %}
+                 src="{% static "images/grad2.jpg" %}"
                  {% elif company.grade < 7 %}
+                 src="{% static "images/grad3.jpg" %}"
                  {% else %}
+                 src="{% static "images/grad4.jpg" %}"
                  {% endif %}
-                 src="{% static "images/gradient.jpg" %}"
             alt="">
             <h1>Alta</h1>
             <br>
@@ -109,10 +112,10 @@
             <h3>Temperatura: <br>{{ info.temperature|floatformat:2 }} °C</h3>
         </div>
         <div class="col-xs-4">
-            <h3>Monóxido de carbono: <br>{{ info.monoxid|floatformat:2 }} gr</h3>
+            <h3>Monóxido de carbono: <br>{{ info.monoxid|floatformat:2 }} ppm</h3>
         </div>
         <div class="col-xs-4">
-            <h3>Calidad del agua: <br>{{ info.water_quality|floatformat:2 }} wq</h3>
+            <h3>Calidad del suelo (CH4): <br>{{ info.water_quality|floatformat:2 }} mixing ratio</h3>
         </div>
     </div>
 </div>

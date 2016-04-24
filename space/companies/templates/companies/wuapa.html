@@ -4,6 +4,7 @@
     {% load static %}
 	<meta charset="UTF-8">
 	<title></title>
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="{% static "css/wuapa.css"%}">
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -18,10 +19,13 @@
 
 	</style>
 </head>
-<body>
+<body style="
+    background:rgb(222, 222, 222);
+    font-family: 'Raleway', sans-serif;
+">
 	<header class="row">
 		<div class="col-sm-6 menu_bar" style="padding: 0px;">
-			<center><a href="#" class="bt_menu">Air CanSat</a></center>
+			<center><a style="font-family: raleway;" href="#" class="bt_menu">Air Can/Sat</a></center>
 		</div>
 		<div class="col-sm-4" style="padding: 0px;" >
 			<input class="form-control" placeholder="Buscar" type="text"></input>
@@ -33,28 +37,21 @@
 	<div class="contenedor1">
 		<div class="container">
                 <div class="row">
-                    <!--  <div class="col-xs-12 col-sm-6 col-md-3  border-col-md-3 ">
-                      <center><h1>Cemex                 </h1></center>
- 					  <center><a href="/"><img src="images/factory-icon.png" class="img-circle img-responsive center-block"></a></center>
-                      <center><p>Empresa productora de ...</p></center>
-                	</div>
-                	<div class="col-xs-12 col-sm-6 col-md-3 border-col-md-3">
-                   	  <center><h1>Minería Fresnillo</h1></center>
- 					  <center><a href="empresa2.html"><img src="images/factory-icon.png" class="img-circle img-responsive center-block"></a></center>
-                      <center><p>Empresa productora de ...</p></center>
-                	</div>
-                	<div  class="col-xs-12 col-sm-6 col-md-3 border-col-md-3">
-                 	  <center><h1>Petroquimica Morelos</h1></center>
- 					  <center><a href="empresa3.html"><img src="images/factory-icon.png" class="img-circle img-responsive center-block"></a></center>
-                      <center><p>Empresa productora de ...</p></center>
-                	</div>
-                    -->
 
                     {% for company in companies %}
-                        <div class="col-xs-12 col-sm-6 col-md-3 border-col-md-3">
-                   	        <center><h1>{{company.name}}</h1></center>
- 					        <center><a href="/{{ company.id }}"><img src="{{ company.image.url }}" class="img-circle img-responsive center-block"></a></center>
-                            <center><p>{{ company.address }}</p></center>
+                        <div class="col-xs-4">
+                   	        <p style="text-align: center; height: 50px; margin-top: 50px; display: block">
+                                {{company.name}}
+                            </p>
+ 					        <a href="/{{ company.id }}">
+                                <img src="{{ company.image.url }}" class="img-circle img-responsive center-block" style="
+                                width: 200px;
+                                height: 200px;
+                            ">
+                            </a>
+                            <p style="
+                            text-align: center;
+                            ">{{ company.address }}</>
                         </div>
 
                     {% endfor %}
