@@ -20,7 +20,7 @@ class Company(models.Model):
     )
     altitude = models.DecimalField(
         decimal_places=8,
-        max_digits=10
+        max_digits=16
     )
 
     grade = models.DecimalField(
