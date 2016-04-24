@@ -37,16 +37,8 @@ INSTALLED_APPS = (
     'django_extensions',
 )
 
-MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware'
-)
 
 ROOT_URLCONF = '%s.urls' % PROJECT_NAME
-
-WSGI_APPLICATION = '%s.wsgi.application' % PROJECT_NAME
 
 
 # Internationalization
@@ -82,3 +74,15 @@ DATETIME_INPUT_FORMATS = [
     '%d-%b-%Y', '%d-%b-%Y %H:%M:%S', '%d-%b-%Y  %H:%M'
 ]
 
+MIDDLEWARE_CLASSES = (
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+)
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+)
