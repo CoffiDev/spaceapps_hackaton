@@ -53,7 +53,7 @@
                     {% for company in companies %}
                         <div class="col-xs-12 col-sm-6 col-md-3 border-col-md-3">
                    	        <center><h1>{{company.name}}</h1></center>
- 					        <center><a href="/{{ company.id }}"><img src="images/factory-icon.png" class="img-circle img-responsive center-block"></a></center>
+ 					        <center><a href="/{{ company.id }}"><img src="{{ company.image.url }}" class="img-circle img-responsive center-block"></a></center>
                             <center><p>{{ company.address }}</p></center>
                         </div>
 

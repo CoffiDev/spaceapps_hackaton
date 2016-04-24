@@ -26,7 +26,7 @@ STATICFILES_FINDERS = (
 
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/storage/'
+MEDIA_ROOT = 'media/'
 
 
 TEMPLATE_DIRS = (BASE_DIR + 'templates',)

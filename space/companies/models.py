@@ -2,6 +2,8 @@
 
 from __future__ import unicode_literals
 
+from django.conf import settings
+
 from django.db import models
 
 
@@ -33,6 +35,13 @@ class Company(models.Model):
     used_energies = models.TextField()
 
     branch = models.TextField()
+
+    image = models.ImageField(
+        max_length=500,
+        blank=True,
+        null=True,
+       #default=open(settings.BASE_DIR + "/companies/static/images/black.jpg")
+    )
 
     grade = models.DecimalField(
         decimal_places=5,
