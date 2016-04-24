@@ -1,0 +1,98 @@
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+body {
+  background: #F1F1F1;
+  color: #FFF;
+  font-family: "Helvetica, Arial, Sans-serif"; }
+
+a {
+  color: white;
+  text-decoration: none; }
+  a:hover {
+    text-decoration: none;
+    color:#FFFFFF ; }
+
+article{
+  padding: 10px;
+  font-family: arial;
+  font-size: 25px;
+  margin:20px;
+}
+/*.artik{
+  background: #000;
+  opacity: 0.5;
+}*/
+#colorin{
+	background:url(../images/untitled-1.jpg), #58FFA9;/*"../" link canonico me saca de la carpeta css y me permite trabajar con otra carpeta*/
+  background-size:cover;
+}
+.holis{
+  width:20%;
+  min-height: 10%;  
+
+}
+
+.wrap {
+  width: 90%;
+  max-width: 1000%;
+  margin: auto;
+  background: #000;
+  opacity: 0.905}
+
+.main {
+  width: 100%;
+  min-height: 100%; }
+
+.seccionToggle {
+  display: none;
+  height: calc(100vh - 50px);
+  background: #fff;
+  color: #FFFFFF;
+  padding: 50px 0;
+  text-align: center; }
+  .seccionToggle h2 {
+    font-size: 60px;
+    margin-top: 50px; }
+  .seccionToggle p {
+    font-size: 20px;
+    margin-bottom: 50px; }
+  .seccionToggle button {
+    background: none ;/*bottom color*/
+    font-size: 20px;
+    font-weight: bold;
+    padding: 20px 40px;
+    display: inline-block;
+    border: 1px solid #FFFFFF;
+    transition: 0.3s all ease; }
+    .seccionToggle button:hover {
+      background-color: #C5C5C5;
+      color: #000000; }
+
+.btn-toggle {
+  height: 50px;
+  line-height: 50px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #494949;
+  display: block;
+  background: #FDFDFD;/*color barra ;)*/
+  text-align: center; }
+  .btn-toggle:hover {
+    text-decoration: none; }
+
+@media screen and (max-width: 500px) {
+  .seccionToggle h2 {
+    margin-top: 0; }
+
+  #colorin{
+  background:url(../images/lele.jpg), #58FFA9;/*"../" link canonico me saca de la carpeta css y me permite trabajar con otra carpeta*/
+  background-size:cover;
+}
+   }
+@media screen and (max-height: 550px) {
+  .seccionToggle h2 {
+    font-size: 40px;
+    margin-top: 0; } }
