@@ -1,0 +1,165 @@
+#! /bin/bash
+#! Description : Provisions an Amazon EC2 instance
+#! Version     : 1.0
+
+PROJECT_NAME=disbursements
+
+ENVIRONMENT_NAME=staging
+
+# Where is the django project located?
+SITEDIR=/var/www/$PROJECT_NAME.mimoni.com
+
+# What settings module to use
+DJANGO_SETTINGS_MODULE="$PROJECT_NAME.settings.$ENVIRONMENT_NAME"
+
+# Core dependencies
+CORE_DEPS='zsh git build-essential'
+
+# Python specific dependencies
+PYTHON_DEPS='python2.7 python2.7-dev python-setuptools ipython'
+
+WEBSERVERS='nginx uwsgi uwsgi-plugin-python'
+
+# Any extra packages to install
+EXTRA_DEPS='libffi-dev libxml2-dev libxslt-dev libjpeg-dev language-pack-es postgresql-server-dev-9.3'
+
+NGINX_CONFIG="
+upstream $PROJECT_NAME {
+    server 127.0.0.1:3031;
+}
+server {
+    listen 80;
+    server_name korriban-services-staging.mimoni.com;
+    error_log /var/www/$PROJECT_NAME.mimoni.com/logs/nginx-error.log;
+    access_log /var/www/$PROJECT_NAME.mimoni.com/logs/nginx-access.log;
+
+    location / {
+        include uwsgi_params;
+        uwsgi_pass $PROJECT_NAME;
+    }
+}"
+
+UWSGI_CONFIG="
+[uwsgi]
+
+plugins = python,logfile
+
+socket = 127.0.0.1:3031
+
+chdir = /var/www/$PROJECT_NAME.mimoni.com/src
+
+wsgi-file = /var/www/$PROJECT_NAME.mimoni.com/src/$PROJECT_NAME/wsgi.py
+
+home = /var/www/$PROJECT_NAME.mimoni.com/env
+
+touch-reload = /var/www/$PROJECT_NAME.mimoni.com/reload
+
+logger = file:/var/www/$PROJECT_NAME.mimoni.com/logs/uwsgi-error.log
+
+req-logger = file:/var/www/$PROJECT_NAME.mimoni.com/logs/uwsgi-access.log
+
+pidfile = /tmp/$PROJECT_NAME.pid
+
+env = DJANGO_SETTINGS_MODULE=$PROJECT_NAME.settings.$ENVIRONMENT_NAME
+
+uid = $ENVIRONMENT_NAME
+
+gid = www-data
+
+processes = 3
+
+threads = 2
+
+vacuum = true
+
+master = true
+
+enable-threads = true
+"
+
+UWSGI_CELERY_CONFIG="
+[uwsgi]
+
+plugins = python,logfile
+
+socket = 127.0.0.1:3032
+
+chdir = /var/www/$PROJECT_NAME.mimoni.com/src
+
+home = /var/www/$PROJECT_NAME.mimoni.com/env
+
+touch-reload = /var/www/$PROJECT_NAME.mimoni.com/reload
+
+logger = file:/var/www/$PROJECT_NAME.mimoni.com/logs/uwsgi-celery-error.log
+
+pidfile2 = /tmp/$PROJECT_NAME-celery.pid
+
+env = DJANGO_SETTINGS_MODULE=$PROJECT_NAME.settings.$ENVIRONMENT_NAME
+
+uid = $ENVIRONMENT_NAME
+
+gid = www-data
+
+master = true
+
+workers = 1
+
+attach-daemon = ../env/bin/celery -A $PROJECT_NAME worker -l DEBUG
+"
+
+# System packages, installed with aptitude
+dependencies() {
+    sudo apt-get update && \
+        sudo apt-get install -y $CORE_DEPS $PYTHON_DEPS $WEBSERVERS $EXTRA_DEPS
+}
+
+setup_user() {
+   if ! id -u $ENVIRONMENT_NAME > /dev/null 2>&1; then
+    sudo useradd $ENVIRONMENT_NAME -G www-data -m -s /bin/zsh
+   fi
+}
+
+setup_dirs() {
+    sudo mkdir -p $SITEDIR && cd $SITEDIR && sudo mkdir -p src logs && sudo touch reload && \
+        sudo chown -R $ENVIRONMENT_NAME:www-data /var/www/$PROJECT_NAME.mimoni.com
+}
+
+setup_nginx() {
+    if [ ! -L /etc/nginx/sites-enabled/$PROJECT_NAME.mimoni.com.conf ]; then
+        echo "$NGINX_CONFIG" | sudo tee /etc/nginx/sites-available/$PROJECT_NAME.mimoni.com.conf > /dev/null && \
+            sudo ln -s /etc/nginx/sites-available/$PROJECT_NAME.mimoni.com.conf /etc/nginx/sites-enabled && \
+            sudo service nginx reload
+    fi
+}
+
+setup_uwsgi() {
+    if [ ! -L /etc/uwsgi/apps-enabled/$PROJECT_NAME.ini ]; then
+       echo "$UWSGI_CONFIG" | sudo tee /etc/uwsgi/apps-available/$PROJECT_NAME.ini > /dev/null && \
+        sudo ln -s /etc/uwsgi/apps-available/$PROJECT_NAME.ini /etc/uwsgi/apps-enabled
+    fi
+}
+
+setup_uwsgi_celery() {
+    if [ ! -L /etc/uwsgi/apps-enabled/$PROJECT_NAME-celery.ini ]; then
+       echo "$UWSGI_CELERY_CONFIG" | sudo tee /etc/uwsgi/apps-available/$PROJECT_NAME-celery.ini > /dev/null && \
+        sudo ln -s /etc/uwsgi/apps-available/$PROJECT_NAME-celery.ini /etc/uwsgi/apps-enabled
+    fi
+}
+
+setup_pip() {
+    if !  which pip; then
+        curl https://bootstrap.pypa.io/get-pip.py | sudo python
+    fi
+}
+
+setup_virtualenv() {
+    sudo pip install virtualenv
+}
+
+# Setups the environment
+setup_environment() {
+    cd $SITEDIR && sudo su -c "virtualenv env" $ENVIRONMENT_NAME
+}
+
+dependencies && setup_user && setup_dirs && \
+ setup_nginx && setup_uwsgi && setup_uwsgi_celery && setup_pip && setup_virtualenv && setup_environment

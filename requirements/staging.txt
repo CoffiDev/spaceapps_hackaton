@@ -1,0 +1,6 @@
+-r base.txt
+
+raven==5.8.1
+boto==2.39.0
+django-storages==1.4.0
+uwsgi==2.0.10
